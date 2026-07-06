@@ -23,7 +23,6 @@
             position: relative;
         }
 
-        /* Анимация воздушных потоков на фоне */
         body::before, body::after {
             content: '';
             position: absolute;
@@ -72,7 +71,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Сигнальная лента */
         .card::before, .card::after {
             content: '';
             position: absolute;
@@ -85,7 +83,6 @@
         .card::before { top: 0; box-shadow: 0 2px 15px rgba(245, 166, 35, 0.3); }
         .card::after { bottom: 0; box-shadow: 0 -2px 15px rgba(245, 166, 35, 0.3); }
 
-        /* Инициалы АСМ */
         .initials {
             font-size: 82px;
             font-weight: 900;
@@ -108,7 +105,6 @@
             to { background-position: 200% center; }
         }
 
-        /* Разделенное название компании */
         .company-name {
             font-size: 12px;
             font-weight: 700;
@@ -118,7 +114,6 @@
             margin-bottom: 16px;
         }
 
-        /* Лаконичный блок профиля */
         .company-profile {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(245, 166, 35, 0.2);
@@ -257,7 +252,6 @@
             color: #f5a623;
         }
 
-        /* Модалка QR-кода */
         .qr-overlay {
             position: absolute;
             inset: 0;
@@ -369,7 +363,6 @@
 
         .email-link svg { width: 14px; height: 14px; fill: #f5a623; }
 
-        /* Мобильная адаптация */
         @media (max-width: 420px) {
             .card { padding: 24px 16px 20px; min-height: 88vh; border-radius: 24px; }
             .initials { font-size: 64px; }
@@ -402,8 +395,8 @@
         <!-- Модалка QR-кода -->
         <div class="qr-overlay" id="qrOverlay">
             <div class="qr-box">
-                <!-- Замените ТЕКСТ после 'data=' на вашу ссылку GitHub Pages -->
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://www.youtube.com/@ЯковБотяновский&color=1f1f1f" alt="QR Code">
+                <!-- Ссылка на QR-код успешно обновлена на вашу постоянную ссылку -->
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://yakovbot.github.io/ASM/&color=1f1f1f" alt="QR Code">
             </div>
             <div class="qr-text">Наведите камеру для сканирования</div>
             <button class="qr-close" onclick="toggleQR()">Закрыть</button>
@@ -412,7 +405,6 @@
         <div class="initials">АСМ</div>
         <div class="company-name">Альп · Строй · Монтаж</div>
 
-        <!-- ОПТИМИЗИРОВАННЫЙ БЛОК БЕЗ ВОДЫ -->
         <div class="company-profile">
             <div class="profile-title">Монтаж · Ремонт · Сервис · Продажа</div>
             <div class="profile-desc">
