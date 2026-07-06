@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>АСМ · Альп Строй Монтаж</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #090909;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            padding: 12px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Анимация воздушных потоков на фоне */
+        body::before, body::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(245, 166, 35, 0.03) 0%, transparent 70%);
+            z-index: 0;
+            animation: airFlow 12s infinite ease-in-out;
+        }
+        body::after {
+            background: radial-gradient(circle, rgba(0, 150, 255, 0.02) 0%, transparent 70%);
+            animation-delay: -6s;
+            animation-duration: 16s;
+        }
+
+        @keyframes airFlow {
+            0%, 100% { transform: translate(-20%, -20%) scale(1); }
+            50% { transform: translate(40%, 30%) scale(1.3); }
+        }
+
+        .card {
+            max-width: 420px;
+            width: 100%;
+            min-height: 92vh;
+            max-height: 96vh;
+            background: #1f1f1f;
+            background-image: linear-gradient(145deg, #2a2a2a 0%, #121212 100%);
+            border-radius: 32px;
+            padding: 40px 24px 32px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
+            text-align: center;
+            border: 1px solid #3a3a3a;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 1;
+            animation: cardRise 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        @keyframes cardRise {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Сигнальная лента */
+        .card::before, .card::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: repeating-linear-gradient(90deg, #f5a623 0px, #f5a623 20px, #1a1a1a 20px, #1a1a1a 30px);
+            z-index: 3;
+        }
+        .card::before { top: 0; box-shadow: 0 2px 15px rgba(245, 166, 35, 0.3); }
+        .card::after { bottom: 0; box-shadow: 0 -2px 15px rgba(245, 166, 35, 0.3); }
+
+        /* Инициалы АСМ */
+        .initials {
+            font-size: 82px;
+            font-weight: 900;
+            letter-spacing: 10px;
+            line-height: 1.1;
+            margin-bottom: 2px;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            background: linear-gradient(90deg, #4a4a4a, #f0f0f0 50%, #4a4a4a);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.7));
+            position: relative;
+            z-index: 1;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        /* Разделенное название компании */
+        .company-name {
+            font-size: 12px;
+            font-weight: 700;
+            color: #a0a0a0;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 16px;
+        }
+
+        /* Лаконичный блок профиля */
+        .company-profile {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(245, 166, 35, 0.2);
+            border-radius: 20px;
+            padding: 16px;
+            margin: 4px 0 14px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .profile-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #f5a623;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .profile-desc {
+            font-size: 13px;
+            color: #c5c5c5;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .profile-desc strong {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .divider-signal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 10px auto;
+            width: 80%;
+        }
+
+        .divider-signal .line {
+            height: 2px;
+            flex: 1;
+            background: linear-gradient(90deg, transparent, rgba(245, 166, 35, 0.4), transparent);
+        }
+
+        .divider-signal .diamond {
+            width: 8px;
+            height: 8px;
+            background: #f5a623;
+            transform: rotate(45deg);
+            box-shadow: 0 0 15px #f5a623;
+            animation: pulseGlow 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { transform: rotate(45deg) scale(1); opacity: 0.6; }
+            50% { transform: rotate(45deg) scale(1.2); opacity: 1; box-shadow: 0 0 25px #f5a623; }
+        }
+
+        .contact-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 8px 0;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(4px);
+            padding: 12px 18px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            color: #d5d5d5;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .contact-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -150%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            transform: skewX(-20deg);
+        }
+
+        @media (hover: hover) {
+            .contact-btn:hover::after { left: 150%; transition: all 0.6s ease; }
+            .contact-btn:hover {
+                background: rgba(245, 166, 35, 0.07);
+                border-color: rgba(245, 166, 35, 0.25);
+                color: #fff;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            }
+            .contact-btn:hover .arrow { color: #f5a623; transform: translateX(4px); }
+        }
+
+        .contact-btn:active {
+            transform: scale(0.98) translateY(0);
+            background: rgba(245, 166, 35, 0.12);
+        }
+
+        .contact-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: #f5a623;
+            transition: transform 0.3s ease;
+        }
+
+        @media (hover: hover) {
+            .contact-btn:hover svg { transform: rotate(5deg) scale(1.1); }
+        }
+
+        .contact-btn .arrow {
+            margin-left: auto;
+            font-size: 14px;
+            color: #555;
+            transition: all 0.2s;
+        }
+
+        .btn-share {
+            background: rgba(245, 166, 35, 0.1);
+            border-color: rgba(245, 166, 35, 0.2);
+            color: #f5a623;
+        }
+
+        /* Модалка QR-кода */
+        .qr-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(13,13,13,0.95);
+            backdrop-filter: blur(8px);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .qr-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .qr-box {
+            background: #fff;
+            padding: 16px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            transform: scale(0.8);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .qr-overlay.active .qr-box { transform: scale(1); }
+        .qr-box img { display: block; width: 200px; height: 200px; }
+        .qr-text { color: #fff; margin-top: 20px; font-size: 15px; font-weight: 600; }
+        
+        .qr-close {
+            margin-top: 30px;
+            background: #2b2b2b;
+            color: #b0b0b0;
+            border: 1px solid #444;
+            padding: 10px 24px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .qr-close:active { transform: scale(0.95); background: #3a3a3a; }
+
+        .phone-block {
+            margin-top: 10px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .phone-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #f5a623;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            padding: 8px 20px;
+            border-radius: 14px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(245, 166, 35, 0.15);
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .phone-number svg { width: 20px; height: 20px; fill: #f5a623; }
+
+        .director {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #a0a0a0;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .director strong { color: #e0e0e0; font-weight: 600; }
+        .director .title {
+            color: #f5a623;
+            font-size: 11px;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-top: 2px;
+        }
+
+        .bottom-links {
+            display: flex;
+            justify-content: center;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .email-link {
+            color: #f5a623;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 30px;
+            background: rgba(245, 166, 35, 0.04);
+            border: 1px solid rgba(245, 166, 35, 0.15);
+        }
+
+        .email-link svg { width: 14px; height: 14px; fill: #f5a623; }
+
+        /* Мобильная адаптация */
+        @media (max-width: 420px) {
+            .card { padding: 24px 16px 20px; min-height: 88vh; border-radius: 24px; }
+            .initials { font-size: 64px; }
+            .company-name { font-size: 10px; letter-spacing: 3px; margin-bottom: 12px; }
+            .company-profile { padding: 12px; margin: 4px 0 10px; }
+            .profile-title { font-size: 12px; }
+            .profile-desc { font-size: 12px; }
+            .contact-btn { font-size: 14px; padding: 10px 14px; border-radius: 12px; }
+            .phone-number { font-size: 20px; padding: 6px 16px; border-radius: 12px; }
+        }
+
+        @media (max-height: 700px) {
+            .card { padding: 16px 16px 12px; min-height: 85vh; }
+            .initials { font-size: 52px; }
+            .company-name { font-size: 9px; margin-bottom: 6px; }
+            .company-profile { padding: 10px; margin: 2px 0 8px; }
+            .profile-title { font-size: 11px; margin-bottom: 4px; }
+            .profile-desc { font-size: 11px; line-height: 1.4; }
+            .divider-signal { margin: 6px auto; }
+            .contact-grid { gap: 6px; }
+            .contact-btn { padding: 8px 12px; font-size: 13px; }
+            .phone-number { font-size: 18px; }
+            .director { margin-top: 8px; padding-top: 8px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+
+        <!-- Модалка QR-кода -->
+        <div class="qr-overlay" id="qrOverlay">
+            <div class="qr-box">
+                <!-- Замените ТЕКСТ после 'data=' на вашу ссылку GitHub Pages -->
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://www.youtube.com/@ЯковБотяновский&color=1f1f1f" alt="QR Code">
+            </div>
+            <div class="qr-text">Наведите камеру для сканирования</div>
+            <button class="qr-close" onclick="toggleQR()">Закрыть</button>
+        </div>
+
+        <div class="initials">АСМ</div>
+        <div class="company-name">Альп · Строй · Монтаж</div>
+
+        <!-- ОПТИМИЗИРОВАННЫЙ БЛОК БЕЗ ВОДЫ -->
+        <div class="company-profile">
+            <div class="profile-title">Монтаж · Ремонт · Сервис · Продажа</div>
+            <div class="profile-desc">
+                Вентиляция и кондиционирование: от бытовых сплит-систем до промышленных <strong>VRF и чиллеров</strong>. Собственная служба <strong>промышленного альпинизма</strong> для высотных работ любой сложности.
+            </div>
+        </div>
+
+        <div class="divider-signal">
+            <span class="line"></span>
+            <span class="diamond"></span>
+            <span class="line"></span>
+        </div>
+
+        <div class="contact-grid">
+            <a href="https://www.instagram.com/alpstroimontage" target="_blank" rel="noopener noreferrer" class="contact-btn">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                <span>Instagram</span>
+                <span class="arrow">→</span>
+            </a>
+
+            <a href="https://t.me/+thNf6yjYHpxlZmEy" target="_blank" rel="noopener noreferrer" class="contact-btn">
+                <svg viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.017c.242-.216-.054-.335-.374-.12l-6.87 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.458c.536-.196 1.006.128.832.941z"/></svg>
+                <span>Telegram канал</span>
+                <span class="arrow">→</span>
+            </a>
+
+            <a href="https://www.youtube.com/@ЯковБотяновский" target="_blank" rel="noopener noreferrer" class="contact-btn">
+                <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                <span>YouTube</span>
+                <span class="arrow">→</span>
+            </a>
+
+            <a href="https://disk.yandex.ru/d/KbyHz4_RPS8c4w" target="_blank" rel="noopener noreferrer" class="contact-btn">
+                <svg viewBox="0 0 24 24"><path d="M19.5 21a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-5.414L11.793 3.707A1 1 0 0 0 11.086 3H4.5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h15zM4.5 5h6.586l2.293 2.293A1 1 0 0 0 14.086 8H19.5A1 1 0 0 1 20.5 9v1H3.5V6a1 1 0 0 1 1-1zM3.5 12h17v6a1 1 0 0 1-1 1H4.5a1 1 0 0 1-1-1v-6z"/></svg>
+                <span>Портфолио выполненных работ</span>
+                <span class="arrow">→</span>
+            </a>
+
+            <div class="contact-btn btn-share" onclick="toggleQR()">
+                <svg viewBox="0 0 24 24"><path d="M4 11h5V5H4v6zm0 7h5v-6H4v6zm7 0h5v-6h-5v6zm0-13v6h5V5h-5zm4.5 9.5h2v2h-2z"/></svg>
+                <span>Поделиться этой визиткой</span>
+                <span class="arrow">→</span>
+            </div>
+        </div>
+
+        <div class="phone-block">
+            <a href="tel:+79017932399" class="phone-number">
+                <svg viewBox="0 0 24 24"><path d="M21.384 17.791l-3.75-3.214a1.25 1.25 0 0 0-1.635.056l-1.442 1.443c-.453-.255-1.125-.712-1.782-1.37-.658-.657-1.114-1.33-1.37-1.782l1.443-1.441a1.25 1.25 0 0 0 .056-1.636L9.69 6.097a1.25 1.25 0 0 0-1.631-.052l-2.02 1.637a3.25 3.25 0 0 0-1.01 3.235 19.388 19.388 0 0 0 6.136 10.038 19.37 19.37 0 0 0 10.039 6.135 3.257 3.257 0 0 0 3.234-1.012l1.637-2.019a1.25 1.25 0 0 0-.091-1.638z"/></svg>
+                8 901 793-23-99
+            </a>
+        </div>
+
+        <div class="director">
+            <strong>Ботяновский Яков Алексеевич</strong><br>
+            <span class="title">генеральный директор</span>
+        </div>
+
+        <div class="bottom-links">
+            <a href="mailto:asm-comp@yandex.ru" class="email-link">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                asm-comp@yandex.ru
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleQR() {
+            document.getElementById('qrOverlay').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
